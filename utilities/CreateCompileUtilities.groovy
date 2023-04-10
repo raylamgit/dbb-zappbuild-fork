@@ -4,6 +4,8 @@ import com.ibm.dbb.metadata.*
 import com.ibm.dbb.dependency.*
 import groovy.transform.*
 import groovy.cli.commons.*
+	
+@Field BuildProperties props = BuildProperties.getInstance()
 
 
 /*
