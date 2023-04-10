@@ -5,7 +5,12 @@ import com.ibm.dbb.dependency.*
 import groovy.transform.*
 import groovy.cli.commons.*
 	
+// define script properties
 @Field BuildProperties props = BuildProperties.getInstance()
+@Field def buildUtils= loadScript(new File("${props.zAppBuildDir}/utilities/BuildUtilities.groovy"))
+@Field def impactUtils= loadScript(new File("${props.zAppBuildDir}/utilities/ImpactUtilities.groovy"))
+@Field def bindUtils= loadScript(new File("${props.zAppBuildDir}/utilities/BindUtilities.groovy"))
+	
 
 
 /*
