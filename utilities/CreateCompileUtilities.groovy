@@ -4,6 +4,7 @@ import com.ibm.dbb.metadata.*
 import com.ibm.dbb.dependency.*
 import groovy.transform.*
 import groovy.cli.commons.*
+import com.ibm.jzos.ZFile	
 	
 // define script properties
 @Field BuildProperties props = BuildProperties.getInstance()
@@ -45,12 +46,12 @@ def createCompileCommand(String buildFile, LogicalFile logicalFile, String membe
 	// add a syslib to the compile command with optional bms output copybook and CICS concatenation
 	compile.dd(new DDStatement().name("SYSLIB").dsn(props.cobol_cpyPDS).options("shr"))
 	// adding bms copybook libraries only when it exists
-	/* Ray lam skip
+	 
 	if (props.bms_cpyPDS && ZFile.dsExists("'${props.bms_cpyPDS}'"))
 		compile.dd(new DDStatement().dsn(props.bms_cpyPDS).options("shr"))
 	if(props.team)
 		compile.dd(new DDStatement().dsn(props.cobol_BMS_PDS).options("shr"))
-	*/	
+		
 	
 	// add additional datasets with dependencies based on the dependenciesDatasetMapping
 	PropertyMappings dsMapping = new PropertyMappings('cobol_dependenciesDatasetMapping')
