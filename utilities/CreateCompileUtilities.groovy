@@ -24,7 +24,7 @@ def createCompileCommand(String buildFile, LogicalFile logicalFile, String membe
 	MVSExec compile = new MVSExec().file(buildFile).pgm(compiler).parm(parms)
 
 	// add DD statements to the compile command
-	
+	/* Ray Lam skip this for now
 	if (isZUnitTestCase){
 	compile.dd(new DDStatement().name("SYSIN").dsn("${props.cobol_testcase_srcPDS}($member)").options('shr').report(true))
 	}
@@ -32,7 +32,7 @@ def createCompileCommand(String buildFile, LogicalFile logicalFile, String membe
 	{
 		compile.dd(new DDStatement().name("SYSIN").dsn("${props.cobol_srcPDS}($member)").options('shr').report(true))
 	}
-	
+	*/
 	compile.dd(new DDStatement().name("SYSPRINT").options(props.cobol_printTempOptions))
 	compile.dd(new DDStatement().name("SYSMDECK").options(props.cobol_tempOptions))
 	(1..17).toList().each { num ->
