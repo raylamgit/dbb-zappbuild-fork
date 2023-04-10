@@ -114,3 +114,37 @@ def createCompileCommand(String buildFile, LogicalFile logicalFile, String membe
 
 	return compile
 }
+
+
+/*
+ * createCobolParms - Builds up the COBOL compiler parameter list from build and file properties
+ */
+def createCobolParms(String buildFile, LogicalFile logicalFile) {
+	def parms = props.getFileProperty('cobol_compileParms', buildFile) ?: ""
+	def cics = props.getFileProperty('cobol_compileCICSParms', buildFile) ?: ""
+	def sql = props.getFileProperty('cobol_compileSQLParms', buildFile) ?: ""
+	def errPrefixOptions = props.getFileProperty('cobol_compileErrorPrefixParms', buildFile) ?: ""
+	def compileDebugParms = props.getFileProperty('cobol_compileDebugParms', buildFile)
+
+	if (buildUtils.isCICS(logicalFile))
+		parms = "$parms,$cics"
+
+	if (buildUtils.isSQL(logicalFile))
+		parms = "$parms,$sql"
+
+	if (props.errPrefix)
+		parms = "$parms,$errPrefixOptions"
+
+	// add debug options
+	if (props.debug)  {
+		parms = "$parms,$compileDebugParms"
+	}
+
+	if (parms.startsWith(','))
+		parms = parms.drop(1)
+
+	if (props.verbose) println "Cobol compiler parms for $buildFile = $parms"
+	return parms
+}
+
+
