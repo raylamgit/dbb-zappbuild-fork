@@ -13,6 +13,7 @@ import com.ibm.dbb.build.report.records.*
 @Field def buildUtils= loadScript(new File("${props.zAppBuildDir}/utilities/BuildUtilities.groovy"))
 @Field def impactUtils= loadScript(new File("${props.zAppBuildDir}/utilities/ImpactUtilities.groovy"))
 @Field def bindUtils= loadScript(new File("${props.zAppBuildDir}/utilities/BindUtilities.groovy"))
+@Field def createCompileUtils= loadScript(new File("${props.zAppBuildDir}/utilities/CreateCompileUtilities.groovy"))	
 	
 println("** Building files mapped to ${this.class.getName()}.groovy script")
 
@@ -57,7 +58,7 @@ sortedList.each { buildFile ->
 	File logFile = new File( props.userBuild ? "${props.buildOutDir}/${member}.log" : "${props.buildOutDir}/${member}.cobol.log")
 	if (logFile.exists())
 		logFile.delete()
-	MVSExec compile = createCompileCommand(buildFile, logicalFile, member, logFile)
+	MVSExec compile = createCompileUtils.createCompileCommand(buildFile, logicalFile, member, logFile)
 	MVSExec linkEdit = createLinkEditCommand(buildFile, logicalFile, member, logFile)
 
 	// execute mvs commands in a mvs job
@@ -170,7 +171,7 @@ def createCobolParms(String buildFile, LogicalFile logicalFile) {
 
 /*
  * createCompileCommand - creates a MVSExec command for compiling the COBOL program (buildFile)
- */
+ 
 def createCompileCommand(String buildFile, LogicalFile logicalFile, String member, File logFile) {
 	String parms = createCobolParms(buildFile, logicalFile)
 	String compiler = props.getFileProperty('cobol_compiler', buildFile)
@@ -276,7 +277,7 @@ def createCompileCommand(String buildFile, LogicalFile logicalFile, String membe
 
 	return compile
 }
-
+*/
 
 /*
  * createLinkEditCommand - creates a MVSExec xommand for link editing the COBOL object module produced by the compile
