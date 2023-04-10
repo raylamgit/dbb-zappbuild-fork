@@ -75,9 +75,11 @@ def createCompileCommand(String buildFile, LogicalFile logicalFile, String membe
 	if (buildUtils.isMQ(logicalFile))
 		compile.dd(new DDStatement().dsn(props.SCSQCOBC).options("shr"))
 		
+	/* Ray Lam Skip
 	// add additional zunit libraries
 	if (isZUnitTestCase)
 	compile.dd(new DDStatement().dsn(props.SBZUSAMP).options("shr"))
+	*/
 
 	// adding alternate library definitions
 	if (props.cobol_dependenciesAlternativeLibraryNameMapping) {
